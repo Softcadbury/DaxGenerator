@@ -2,7 +2,7 @@ namespace DaxGenerator.Test
 {
     using System;
     using NUnit.Framework;
-    using DaxGenerator.Filters;
+    using Filters;
 
     public class TestFilters
     {

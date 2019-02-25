@@ -59,26 +59,27 @@
                 if (typeof(T) == typeof(int?) || typeof(T) == typeof(long?))
                 {
                     return "0";
+                }
+            }
+            else
+            {
+                if (value is string stringValue)
+                {
+                    return $"\"{stringValue.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"";
+                }
 
+                if (value is int || value is long)
+                {
+                    return value.ToString();
+                }
+
+                if (value is DateTime dateTimeValue)
+                {
+                    return $"DATEVALUE(\"{dateTimeValue:MM'/'dd'/'yyyy}\")";
                 }
             }
 
-            if (value is string stringValue)
-            {
-                return $"\"{stringValue.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"";
-            }
-
-            if (value is int || value is long)
-            {
-                return value.ToString();
-            }
-
-            if (value is DateTime dateTimeValue)
-            {
-                return $"DATEVALUE(\"{dateTimeValue:MM'/'dd'/'yyyy}\")";
-            }
-
-            throw new System.ArgumentOutOfRangeException($"Type: {typeof(T)} with value: {value} not handled");
+            throw new ArgumentOutOfRangeException($"Type: {typeof(T)} with value: {value} not handled");
         }
     }
 }

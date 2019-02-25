@@ -1,6 +1,8 @@
 ﻿namespace DaxGenerator.Filters
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class FilterSymbol
     {
@@ -35,9 +37,23 @@
             return GetFilter("<", value);
         }
 
-        private string GetFilter<T>(string symbol, T value)
+        public string In<T>(List<T> values)
         {
-            string filterValue = GetFilterValue(value);
+            return GetFilter("In", "{" + string.Join(",", values.Select(GetFormattedValue)) + "}", false);
+        }
+
+        private string GetFilter<T>(string symbol, T value, bool hasToFormatValue = true)
+        {
+            string filterValue;
+
+            if (hasToFormatValue)
+            {
+                filterValue = GetFormattedValue(value);
+            }
+            else
+            {
+                filterValue = value.ToString();
+            }
 
             if (_isRelated)
             {
@@ -47,7 +63,7 @@
             return $"'{_tableName}'[{_propertyName}] {symbol} {filterValue}";
         }
 
-        private string GetFilterValue<T>(T value)
+        private string GetFormattedValue<T>(T value)
         {
             if (value == null)
             {
@@ -68,7 +84,7 @@
                     return $"\"{stringValue.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"";
                 }
 
-                if (value is int || value is long)
+                if (value is int || value is int? || value is long || value is long?)
                 {
                     return value.ToString();
                 }

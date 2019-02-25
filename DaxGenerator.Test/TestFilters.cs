@@ -1,6 +1,7 @@
 namespace DaxGenerator.Test
 {
     using System;
+    using System.Collections.Generic;
     using NUnit.Framework;
     using Filters;
 
@@ -93,6 +94,19 @@ namespace DaxGenerator.Test
 
             string relatedFilter = Filter.OnRelatedTable(TABLE_NAME).WithProperty(PROPERTY_NAME).LessThan(valueDateTime);
             AssertRelatedFilter(relatedFilter, "<", "DATEVALUE(\"01/01/0001\")");
+        }
+
+        [Test]
+        public void Filter_OnTable_Property_In_NullableIntListValue()
+        {
+            List<int?> value = new List<int?> { null, 12, 34 };
+            string expectedValue = "{0,12,34}";
+
+            string filter = Filter.OnTable(TABLE_NAME).WithProperty(PROPERTY_NAME).In(value);
+            AssertFilter(filter, "In", expectedValue);
+
+            string relatedFilter = Filter.OnRelatedTable(TABLE_NAME).WithProperty(PROPERTY_NAME).In(value);
+            AssertRelatedFilter(relatedFilter, "In", expectedValue);
         }
 
         private void AssertFilter(string result, string symbol, string value)

@@ -44,16 +44,7 @@
 
         private string GetFilter<T>(string symbol, T value, bool hasToFormatValue = true)
         {
-            string filterValue;
-
-            if (hasToFormatValue)
-            {
-                filterValue = GetFormattedValue(value);
-            }
-            else
-            {
-                filterValue = value.ToString();
-            }
+            string filterValue = hasToFormatValue ? GetFormattedValue(value) : value.ToString();
 
             if (_isRelated)
             {
@@ -79,19 +70,17 @@
             }
             else
             {
-                if (value is string stringValue)
+                switch (value)
                 {
-                    return $"\"{stringValue.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"";
-                }
+                    case string stringValue:
+                        return $"\"{stringValue.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"";
 
-                if (value is int || value is int? || value is long || value is long?)
-                {
-                    return value.ToString();
-                }
+                    case int _:
+                    case long _:
+                        return value.ToString();
 
-                if (value is DateTime dateTimeValue)
-                {
-                    return $"DATEVALUE(\"{dateTimeValue:MM'/'dd'/'yyyy}\")";
+                    case DateTime dateTimeValue:
+                        return $"DATEVALUE(\"{dateTimeValue:MM'/'dd'/'yyyy}\")";
                 }
             }
 

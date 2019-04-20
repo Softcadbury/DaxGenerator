@@ -19,7 +19,7 @@ Filter.OnRelatedTable("User").WithProperty("CreationDate").GreaterThan(new DateT
 Filter.OnRelatedTable("User").WithProperty("Age").In(new List<int?> { 30,31,32 });
 ```
 
-How to generate queries
+How to generate queries:
 ```csharp
 // EVALUATE SUMMARIZECOLUMNS (FILTER('User', 'User'[Name] = "Softcadbury" && 'User'[Age] In {30,31,32}))
 var summarizeColumns = new SummarizeColumns("User");

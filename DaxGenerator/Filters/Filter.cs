@@ -2,6 +2,9 @@
 {
     public static class Filter
     {
+        public static string And { get; } = " && ";
+        public static string Or { get; } = " || ";
+
         public static FilterProperty OnTable(string tableName)
         {
             return new FilterProperty(tableName, false);

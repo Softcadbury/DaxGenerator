@@ -12,9 +12,17 @@ How to generate filters:
 // 'User'[Name] = "Softcadbury"
 Filter.OnTable("User").WithProperty("Name").EqualsTo("Softcadbury");
 
-// RELATED('User'[CreationDate]) > DATEVALUE("01/01/2019")
-Filter.OnRelatedTable("User").WithProperty("CreationDate").GreaterThan(new DateTime(2019, 1, 1));
+// RELATED('User'[CreationDate]) > DATEVALUE("01/03/2019")
+Filter.OnRelatedTable("User").WithProperty("CreationDate").GreaterThan(new DateTime(2019, 3, 1));
 
 // 'User'[Age] In {30,31,32}
 Filter.OnRelatedTable("User").WithProperty("Age").In(new List<int?> { 30,31,32 });
+```
+
+How to generate queries
+```csharp
+// EVALUATE SUMMARIZECOLUMNS (FILTER('User', 'User'[Name] = "Softcadbury" && 'User'[Age] In {30,31,32}))
+var summarizeColumns = new SummarizeColumns("User");
+summarizeColumns.AddFilter(Filter.OnTable("User").WithProperty("Name").EqualsTo("Softcadbury"));
+summarizeColumns.AddFilter(Filter.OnRelatedTable("User").WithProperty("Age").In(new List<int?> { 30,31,32 }));
 ```

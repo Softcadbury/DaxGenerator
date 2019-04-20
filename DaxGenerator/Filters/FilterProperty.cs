@@ -5,7 +5,7 @@
         private readonly string _tableName;
         private readonly bool _isRelated;
 
-        public FilterProperty(string tableName, bool isRelated)
+        internal FilterProperty(string tableName, bool isRelated)
         {
             _tableName = tableName;
             _isRelated = isRelated;

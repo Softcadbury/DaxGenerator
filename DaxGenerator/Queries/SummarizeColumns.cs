@@ -1,7 +1,8 @@
-﻿namespace DaxGenerator
+﻿namespace DaxGenerator.Queries
 {
     using System.Linq;
     using System.Collections.Generic;
+    using Filters;
 
     public class SummarizeColumns
     {
@@ -28,7 +29,7 @@
 
             if (_filters.Any())
             {
-                filters = string.Join(" && ", _filters);
+                filters = string.Join(Filter.And, _filters);
             }
 
             return $"EVALUATE SUMMARIZECOLUMNS (FILTER('{_tableName}', {filters}))";

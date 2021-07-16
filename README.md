@@ -2,7 +2,7 @@
 
 ## Description
 
-Data Analysis Expressions (DAX) is a query language for Power BI, SSAS and Power Pivot in Excel.
+Data Analysis Expressions (DAX) is a query language for Power BI, SSAS and Power Pivot in Excel (https://docs.microsoft.com/en-us/dax/).
 This library is here to help you generate these DAX queries dynamically.
 
 ## Usage
